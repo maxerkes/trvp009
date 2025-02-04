@@ -1,0 +1,29 @@
+-- Создаем базу данных
+CREATE DATABASE Sklad;
+
+-- Используем созданную базу данных
+USE Sklad;
+
+-- Таблица для хранения информации о поставщиках
+CREATE TABLE Suppliers (
+    supplier_id INT AUTO_INCREMENT PRIMARY KEY,  -- уникальный ID поставщика
+    supplier_name VARCHAR(255) NOT NULL,  -- Название поставщика
+    supply_date DATE
+);
+
+-- Таблица для хранения информации о заготовках
+CREATE TABLE Blanks (
+    blank_id INT AUTO_INCREMENT PRIMARY KEY,     -- уникальный ID заготовки
+    material_name VARCHAR(255) NOT NULL,          -- Материал заготовки
+    part_name VARCHAR(255) NOT NULL,              -- Название детали
+    total_quantity INT NOT NULL                  -- Общее количество заготовок
+);
+
+-- Таблица для хранения информации о поставках заготовок
+CREATE TABLE Supply_Blanks (
+    supply_id INT AUTO_INCREMENT PRIMARY KEY,    -- уникальный ID поставки
+    supplier_id INT,                              -- ID поставщика
+    blank_id INT,                                 -- ID заготовки
+    FOREIGN KEY (supplier_id) REFERENCES Suppliers(supplier_id) ON DELETE CASCADE,
+    FOREIGN KEY (blank_id) REFERENCES Blanks(blank_id) ON DELETE CASCADE
+);
